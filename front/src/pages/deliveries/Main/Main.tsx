@@ -1,33 +1,43 @@
 import { FC } from 'react';
 import { SubHeader } from './SubHeader/SubHeader';
 
-export const Main: FC = () => {
+import Product from '../../../models/Product';
+import Delivery from '../../../models/Delivery';
+
+import { useQuery } from '@apollo/client';
+import { GET_DELIVERY_DETAILS } from '../../../graphql/queries';
+
+import './Main.scss';
+
+interface MainProps {
+  deliveryId: string; // Pass the ID of the selected delivery as a prop
+}
+
+export const Main: FC<MainProps> = ({ deliveryId }) => {
+  const { loading, error, data } = useQuery(GET_DELIVERY_DETAILS, {
+    variables: { id: deliveryId },
+  });
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const delivery: Delivery = data.delivery;
+
   return (
     <main className="page__main">
-      <SubHeader />
+      <SubHeader delivery={delivery} />
       <div className="products-grid page__horizontal-space page__vertical-space">
-        <div className="product-card" data-test-id="product-card">
-          <h2>Product 1</h2>
-          <p>
-            Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book
-          </p>
-          <p>$100</p>
-          <img
-            src="https://cookunity-media.imgix.net/media/catalog/product/cache/x1200/l/a/large-chicken_schnitzel_-_ratel.jpeg"
-            alt="Product 1"
-          />
-        </div>
-        <div className="product-card" data-test-id="product-card">
-          <h2>Product 2</h2>
-          <p>Lorem the industry's standard dummy text ever since the 1500s.</p>
-          <p>$200</p>
-          <img
-            src="https://cookunity-media.imgix.net/media/catalog/product/cache/x1200/l/a/large-chicken_schnitzel_-_ratel.jpeg"
-            alt="Product 2"
-          />
-        </div>
+        {delivery.products.map((product: Product) => (
+          <div
+            className="product-card"
+            data-test-id="product-card"
+            key={product.id}>
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+            <p>${product.price}</p>
+            <img src={product.picture} alt={product.name} />
+          </div>
+        ))}
       </div>
     </main>
   );
