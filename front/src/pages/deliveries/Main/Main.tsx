@@ -1,16 +1,19 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
+import { FC } from 'react';
 import { SubHeader } from './SubHeader/SubHeader';
-import './Main.scss';
+
 import Product from '../../../models/Product';
 import Delivery from '../../../models/Delivery';
+
+import { useQuery } from '@apollo/client';
 import { GET_DELIVERY_DETAILS } from '../../../graphql/queries';
+
+import './Main.scss';
 
 interface MainProps {
   deliveryId: string; // Pass the ID of the selected delivery as a prop
 }
 
-export const Main: React.FC<MainProps> = ({ deliveryId }) => {
+export const Main: FC<MainProps> = ({ deliveryId }) => {
   const { loading, error, data } = useQuery(GET_DELIVERY_DETAILS, {
     variables: { id: deliveryId },
   });

@@ -1,6 +1,9 @@
-import './Header.scss';
+import { FC } from 'react';
+
 import Delivery from '../../../models/Delivery';
 import { isHoliday } from 'date-fns-holiday-us';
+
+import './Header.scss';
 
 interface HeaderProps {
   deliveries: Delivery[];
@@ -8,7 +11,7 @@ interface HeaderProps {
   setSelectedDelivery: (delivery: Delivery | any) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header: FC<HeaderProps> = ({
   deliveries,
   selectedDelivery,
   setSelectedDelivery,

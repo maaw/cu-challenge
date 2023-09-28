@@ -1,9 +1,11 @@
 import { FC, useState } from 'react';
 import { Header } from './Header/Header';
 import { Main } from './Main/Main';
+
 import Delivery from '../../models/Delivery';
-import GET_DELIVERIES from '../../graphql/queries';
+
 import { useQuery } from '@apollo/client';
+import GET_DELIVERIES from '../../graphql/queries';
 
 export const DeliveriesPage: FC = () => {
   const [selectedDelivery, setSelectedDelivery] = useState<Delivery | any>();
