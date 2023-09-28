@@ -13,7 +13,7 @@ export const schema = buildSchema(`
   type Delivery {
     id: ID!
     date: String!
-    products: [Product!]! # Add a products field to Delivery
+    products: [Product!]! 
   }
   
   type Query {
