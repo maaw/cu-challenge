@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_DELIVERIES = gql`
-  query {
-    deliveries {
+  query ($userId: ID!) {
+    deliveries(userId: $userId) {
       id
       date
     }
