@@ -13,13 +13,13 @@ export const schema = buildSchema(`
   type Delivery {
     id: ID!
     date: String!
-    products: [Product!]! 
+    products: [Product!]!
+    userId: ID!
   }
   
   type Query {
-    deliveries: [Delivery!]!
-    products: [Product!]!
+    deliveries(userId: ID!): [Delivery!]!
     delivery(id: ID!): Delivery 
-    product(id: ID!): Product
   }
+  
 `);

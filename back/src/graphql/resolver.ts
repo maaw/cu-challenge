@@ -29,23 +29,41 @@ const products = [
   },
 ];
 
-// Mock delivery data with associated product IDs
+// Mock delivery data with associated product IDs and userIds
 const deliveries = [
   {
     id: 1,
     date: '2023-09-27 00:00:00',
     productIds: ['1', '2'],
+    userId: '1',
   },
   {
     id: 2,
     date: '2023-09-04 00:00:00',
     productIds: ['3'],
+    userId: '1',
   },
-  // Add more delivery entries as needed
+  {
+    id: 3,
+    date: '2023-08-01 00:00:00',
+    productIds: ['3'],
+    userId: '2',
+  },
 ];
 
-export async function fetchDeliveries(): Promise<any[]> {
-  return deliveries;
+export async function fetchDeliveries(args: {
+  userId: string;
+}): Promise<any[]> {
+  // Filter deliveries based on the provided userId
+  const userDeliveries = deliveries.filter(
+    (delivery) => delivery.userId === args.userId
+  );
+
+  if (!userDeliveries) {
+    throw new Error(`Deliveries for user ID ${args.userId} not found`);
+  }
+
+  return userDeliveries;
 }
 
 export async function fetchDeliveryWithProducts(args: {

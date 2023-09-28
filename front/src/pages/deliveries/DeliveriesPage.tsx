@@ -11,7 +11,9 @@ export const DeliveriesPage: FC = () => {
   const [selectedDelivery, setSelectedDelivery] = useState<Delivery | any>();
 
   //Get deliveries from graphql API
-  const { loading, error, data } = useQuery(GET_DELIVERIES);
+  const { loading, error, data } = useQuery(GET_DELIVERIES, {
+    variables: { userId: 1 }, //Mock userId, probably you want to get it from the session
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
